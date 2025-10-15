@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Victory Light — Saudi Victory 🇸🇦</title>
+<style>
+  body {
+    margin:0;
+    padding:0;
+    height:100vh;
+    overflow:hidden;
+    background:#000;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color:#00d34a;
+  }
+  .center {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    z-index:1;
+  }
+  h1 {
+    font-size:4em;
+    text-shadow: 0 0 15px rgba(0,211,74,0.8),0 0 30px rgba(0,211,74,0.3);
+    margin:0;
+  }
+  input {
+    margin-top:20px;
+    padding:10px 15px;
+    width:300px;
+    border-radius:8px;
+    border:none;
+    outline:none;
+    font-size:1em;
+  }
+  #notes {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+  }
+  .note {
+    position:absolute;
+    background: rgba(0,211,74,0.1);
+    border: 2px solid rgba(0,211,74,0.5);
+    padding:10px 15px;
+    border-radius:10px;
+    color:#00d34a;
+    font-weight:bold;
+    cursor:pointer;
+    pointer-events:auto;
+    transition: transform 0.3s ease;
+  }
+  .note h2 {
+    margin:0;
+    font-size:1.2em;
+    animation: glow 1.5s infinite alternate;
+  }
+  .note p {
+    margin:5px 0 0 0;
+    font-size:0.9em;
+  }
+  @keyframes glow {
+    0% { text-shadow: 0 0 5px #00d34a; }
+    50% { text-shadow: 0 0 15px #00ff4a; }
+    100% { text-shadow: 0 0 5px #00d34a; }
+  }
+  footer {
+    position:absolute;
+    bottom:5px;
+    width:100%;
+    text-align:center;
+    font-size:10px;
+    color: rgba(0,211,74,0.4);
+  }
+</style>
+</head>
+<body>
+
+<div class="center">
+  <h1>نصر — Saudi National Team 🇸🇦</h1>
+  <input type="text" id="inputNote" placeholder="اكتب تهنئتك لمنتخبنا / Write your congratulations to our team" maxlength="100">
+</div>
+
+<div id="notes"></div>
+
+<footer>Designed by Rana Al-Buqami / تم تصميمه بواسطة رنا البقمي</footer>
+
+<script>
+const input = document.getElementById('inputNote');
+const notesContainer = document.getElementById('notes');
+
+// دالة لإضافة تعليق
+function addNote(text, bigText="فخر | قوة | نصر", smallText="جميعنا نهنئ فريق المنتخب\nWe all congratulate our national team") {
+  const note = document.createElement('div');
+  note.classList.add('note');
+
+  const h2 = document.createElement('h2');
+  h2.textContent = bigText;
+  note.appendChild(h2);
+
+  const p = document.createElement('p');
+  p.textContent = smallText;
+  note.appendChild(p);
+
+  notesContainer.appendChild(note);
+
+  // موضع عشوائي
+  note.style.top = Math.random() * 80 + 'vh';
+  note.style.left = Math.random() * 80 + 'vw';
+  note.style.transform = `rotate(${Math.random()*30-15}deg)`;
+
+  // عند الضغط يتحرك بشكل عشوائي
+  note.addEventListener('click', () => {
+    note.style.top = Math.random() * 80 + 'vh';
+    note.style.left = Math.random() * 80 + 'vw';
+    note.style.transform = `rotate(${Math.random()*30-15}deg)`;
+  });
+}
+
+// إضافة تعليق أولي من المصممة
+addNote("مبروك لمنتخبنا السعودي!","فخر | قوة | نصر","جميعنا نهنئ فريق المنتخب\nWe all congratulate our national team");
+
+// حدث الضغط على Enter لإضافة التعليقات الجديدة
+input.addEventListener('keypress', function(e){
+  if(e.key === 'Enter' && input.value.trim() !== '') {
+    addNote(input.value.trim());
+    input.value = '';
+  }
+});
+</script>
+
+</body>
+</html>
