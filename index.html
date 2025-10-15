@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Victory Light — Saudi Victory 🇸🇦</title>
+<style>
+  body {
+    margin:0;
+    padding:0;
+    height:100vh;
+    overflow:hidden;
+    background:#000;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color:#00d34a;
+  }
+  .center {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    z-index:1;
+  }
+  h1 {
+    font-size:4em;
+    text-shadow: 0 0 15px rgba(0,211,74,0.8),0 0 30px rgba(0,211,74,0.3);
+    margin:0;
+  }
+  input {
+    margin-top:20px;
+    padding:10px 15px;
+    width:300px;
+    border-radius:8px;
+    border:none;
+    outline:none;
+    font-size:1em;
+  }
+  #notes {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+  }
+  .note {
+    position:absolute;
+    color: rgba(0,211,74,0.7);
+    font-size:1em;
+    font-weight:bold;
+    pointer-events:auto;
+    cursor:pointer;
+  }
+  footer {
+    position:absolute;
+    bottom:5px;
+    width:100%;
+    text-align:center;
+    font-size:10px;
+    color: rgba(0,211,74,0.4);
+  }
+</style>
+</head>
+<body>
+
+<div class="center">
+  <h1>نصر — Saudi National Team 🇸🇦</h1>
+  <input type="text" id="inputNote" placeholder="اكتب تهنئتك لمنتخبنا / Write your congratulations to our team" maxlength="100">
+</div>
+
+<div id="notes"></div>
+
+<footer>Designed by Rana Al-Buqami / تم تصميمه بواسطة رنا البقمي</footer>
+
+<script>
+const input = document.getElementById('inputNote');
+const notesContainer = document.getElementById('notes');
+
+input.addEventListener('keypress', function(e){
+  if(e.key === 'Enter' && input.value.trim() !== '') {
+    addNote(input.value.trim());
+    input.value = '';
+  }
+});
+
+function addNote(text){
+  const note = document.createElement('div');
+  note.classList.add('note');
+  note.textContent = text;
+
+  // random position
+  note.style.top = Math.random() * 90 + 'vh';
+  note.style.left = Math.random() * 90 + 'vw';
+  note.style.transform = `rotate(${Math.random()*30-15}deg)`;
+  notesContainer.appendChild(note);
+
+  // click to remove
+  note.addEventListener('click', ()=>{ note.remove(); });
+}
+</script>
+
+</body>
+</html>
