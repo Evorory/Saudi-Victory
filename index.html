@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saudi Victory Celebration 🇸🇦</title>
+<style>
+  body {
+    margin:0;
+    padding:0;
+    height:100vh;
+    overflow:hidden;
+    background:#000;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color:#00d34a;
+  }
+
+  /* النص الرئيسي في الوسط */
+  .center {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    z-index:2;
+  }
+
+  h1.big-text {
+    font-size:4em;
+    text-shadow: 0 0 15px rgba(0,211,74,0.8), 0 0 30px rgba(0,211,74,0.3);
+    margin:0;
+    animation: glowText 2s infinite alternate;
+  }
+
+  p.medium-text {
+    margin:10px 0 0 0;
+    font-size:1.2em;
+  }
+
+  p.medium-text span {
+    display:block;
+  }
+
+  @keyframes glowText {
+    0% { text-shadow: 0 0 10px #00ff4a; }
+    50% { text-shadow: 0 0 25px #00ff4a; }
+    100% { text-shadow: 0 0 10px #00ff4a; }
+  }
+
+  input {
+    margin-top:20px;
+    padding:10px 15px;
+    width:300px;
+    border-radius:8px;
+    border:none;
+    outline:none;
+    font-size:1em;
+    z-index:2;
+    position:relative;
+  }
+
+  /* الحاوية للتعليقات في الخلفية */
+  #notes {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+  }
+
+  /* مربعات التعليقات */
+  .note {
+    position:absolute;
+    background: rgba(0,211,74,0.1);
+    border: 2px solid rgba(0,211,74,0.5);
+    padding:10px 15px;
+    border-radius:10px;
+    color:#00d34a;
+    font-weight:bold;
+    cursor:pointer;
+    pointer-events:auto;
+    transition: transform 0.3s ease;
+    font-size:0.9em;
+    max-width:250px;
+  }
+
+  /* النص الصغير أسفل الصفحة */
+  footer {
+    position:absolute;
+    bottom:5px;
+    width:100%;
+    text-align:center;
+    font-size:10px;
+    color: rgba(0,211,74,0.4);
+    z-index:2;
+  }
+</style>
+</head>
+<body>
+
+<div class="center">
+  <h1 class="big-text" id="bigText">فخر</h1>
+  <p class="medium-text">
+    <span>جميعنا نهنئ منتخبنا السعودي</span>
+    <span>We all congratulate our national team</span>
+  </p>
+  <input type="text" id="inputNote" placeholder="اكتب تهنئتك هنا / Write your congratulations (حد 50 حرف)" maxlength="50">
+</div>
+
+<div id="notes"></div>
+
+<footer>تم تصميمه بواسطة رنا البقمي</footer>
+
+<script>
+const bigTextEl = document.getElementById('bigText');
+const input = document.getElementById('inputNote');
+const notesContainer = document.getElementById('notes');
+
+// مصفوفة الكلمات الكبيرة المتغيرة
+const bigWords = ["فخر", "قوة", "نصر", "تألق", "إبداع", "إنجاز"];
+
+// تغيير النص الكبير كل 2 ثانية
+setInterval(() => {
+  const randomWord = bigWords[Math.floor(Math.random() * bigWords.length)];
+  bigTextEl.textContent = randomWord;
+}, 2000);
+
+// دالة لإضافة تعليق
+function addNote(text) {
+  const note = document.createElement('div');
+  note.classList.add('note');
+  note.textContent = text;
+
+  // موضع عشوائي في الخلفية
+  note.style.top = Math.random() * 80 + 'vh';
+  note.style.left = Math.random() * 80 + 'vw';
+  note.style.transform = `rotate(${Math.random()*30-15}deg)`;
+
+  notesContainer.appendChild(note);
+
+  // عند الضغط على التعليق يتحرك إلى مكان عشوائي
+  note.addEventListener('click', () => {
+    note.style.top = Math.random() * 80 + 'vh';
+    note.style.left = Math.random() * 80 + 'vw';
+    note.style.transform = `rotate(${Math.random()*30-15}deg)`;
+  });
+}
+
+// إضافة التعليق الأولي كمثال
+addNote("مبروك لمنتخبنا السعودي!");
+
+// حدث الضغط على Enter لإضافة التعليقات الجديدة
+input.addEventListener('keypress', function(e){
+  if(e.key === 'Enter' && input.value.trim() !== '') {
+    addNote(input.value.trim());
+    input.value = '';
+  }
+});
+</script>
+
+</body>
+</html>
